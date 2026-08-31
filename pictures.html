@@ -529,10 +529,44 @@
         const lbPrev = document.getElementById('lbPrev');
         const lbNext = document.getElementById('lbNext');
 
-        // Build gallery from the pictures/ folder
+        // Build gallery from hosted image URLs
         const picsGrid = document.getElementById('picsGrid');
-        const picFiles = [];
-        for (let i = 1; i <= 24; i++) picFiles.push('pictures/iamge%20(' + i + ').webp');
+        const picFiles = [
+            'https://i.ibb.co/tM3ZYD6Y/Image-1.webp',
+            'https://i.ibb.co/xSPvt9yj/Image-2.webp',
+            'https://i.ibb.co/TDP8j859/Image-3.webp',
+            'https://i.ibb.co/YBQG4R06/Image-4.webp',
+            'https://i.ibb.co/JRvdR9C1/Image-5.webp',
+            'https://i.ibb.co/23g14rqN/Image-6.webp',
+            'https://i.ibb.co/r2jLwzQp/Image-7.webp',
+            'https://i.ibb.co/0ysCcrXb/Image-8.webp',
+            'https://i.ibb.co/1GFJ91tq/Image-9.webp',
+            'https://i.ibb.co/XxBqP8pw/Image-10.webp',
+            'https://i.ibb.co/TxXky79Y/Image-11.webp',
+            'https://i.ibb.co/qMqmQwfT/Image-12.webp',
+            'https://i.ibb.co/S7K1k0yn/Image-13.webp',
+            'https://i.ibb.co/Pz5y79MK/Image-14.webp',
+            'https://i.ibb.co/fzwK4chS/Image-15.webp',
+            'https://i.ibb.co/bRzRBqwm/Image-16.webp',
+            'https://i.ibb.co/1tJtD1K9/Image-17.webp',
+            'https://i.ibb.co/k25PMnwh/Image-18.webp',
+            'https://i.ibb.co/4Z1MCy2B/Image-19.webp',
+            'https://i.ibb.co/wNC0QzhH/Image-20.webp',
+            'https://i.ibb.co/G4q2QJHK/Image-21.webp',
+            'https://i.ibb.co/351wKt4W/Image-22.webp',
+            'https://i.ibb.co/F4zP90X1/Image-23.webp',
+            'https://i.ibb.co/kV90NWW0/Image-24.webp',
+            'https://i.ibb.co/rfwtcfCM/Image-25.webp',
+            'https://i.ibb.co/rfv3y28g/Image-26.webp',
+            'https://i.ibb.co/HLFs2sDn/Image-27.webp',
+            'https://i.ibb.co/tPnMpXcj/Image-28.webp',
+            'https://i.ibb.co/Q30WRSTv/Image-29.webp',
+            'https://i.ibb.co/JY93qNb/Image-30.webp',
+            'https://i.ibb.co/HTTGJc6G/Image-31.webp',
+            'https://i.ibb.co/39q09sD1/Image-32.webp',
+            'https://i.ibb.co/Dg7Pb3vN/Image-33.webp',
+            'https://i.ibb.co/8LfkHqnD/Image-34.webp'
+        ];
         let pics = [];
 
         picFiles.forEach((src, i) => {
