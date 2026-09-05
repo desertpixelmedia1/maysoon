@@ -8,11 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --purple-light: #f3e8ff;
@@ -24,27 +20,25 @@
             --purple-600: #7e22ce;
             --purple-dark: #581c87;
             --white: #ffffff;
-            --off-white: #faf5ff;
             --text-dark: #1e1b2e;
             --text-muted: #6b7280;
             --gradient-1: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #7e22ce 100%);
-            --gradient-2: linear-gradient(135deg, #e9d5ff 0%, #c084fc 50%, #a855f7 100%);
             --gradient-bg: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 30%, #e9d5ff 60%, #faf5ff 100%);
         }
 
         body {
+            min-height: 100vh;
+            overflow-x: hidden;
             font-family: 'Poppins', sans-serif;
             background: var(--gradient-bg);
             color: var(--text-dark);
-            min-height: 100vh;
-            overflow-x: hidden;
         }
 
         .particles {
             position: fixed;
             inset: 0;
-            pointer-events: none;
             z-index: 0;
+            pointer-events: none;
             overflow: hidden;
         }
 
@@ -63,11 +57,11 @@
 
         .glow-orb {
             position: fixed;
+            z-index: 0;
             border-radius: 50%;
             filter: blur(80px);
             opacity: 0.15;
             pointer-events: none;
-            z-index: 0;
         }
 
         .glow-orb-1 { width: 400px; height: 400px; background: var(--purple-300); top: -100px; right: -100px; animation: orbFloat1 8s ease-in-out infinite; }
@@ -82,65 +76,42 @@
             position: fixed;
             top: 0;
             left: 0;
+            z-index: 1000;
             width: 100%;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(20px);
-            background: rgba(250, 245, 255, 0.7);
+            background: rgba(250, 245, 255, 0.72);
             border-bottom: 1px solid rgba(192, 132, 252, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            padding: 0.6rem 2rem;
-            background: rgba(250, 245, 255, 0.9);
-            box-shadow: 0 4px 30px rgba(147, 51, 234, 0.1);
+            backdrop-filter: blur(20px);
         }
 
         .nav-logo {
             font-family: 'Pacifico', cursive;
             font-size: 1.5rem;
+            text-decoration: none;
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-decoration: none;
         }
 
         .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            list-style: none;
         }
 
         .nav-links a {
-            text-decoration: none;
             color: var(--text-dark);
-            font-weight: 500;
             font-size: 0.95rem;
-            position: relative;
-            padding: 0.25rem 0;
+            font-weight: 500;
+            text-decoration: none;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: var(--gradient-1);
-            border-radius: 2px;
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active { color: var(--purple-500); }
-        .nav-links a:hover::after,
-        .nav-links a.active::after { width: 100%; }
+        .nav-links a.active,
+        .nav-links a:hover { color: var(--purple-500); }
 
         main {
             position: relative;
@@ -151,144 +122,130 @@
         }
 
         .section-title {
+            margin-bottom: 2.4rem;
             text-align: center;
-            margin-bottom: 2.5rem;
         }
 
-        .section-title h1 {
+        h1 {
             font-family: 'Fredoka One', cursive;
-            font-size: clamp(2.35rem, 6vw, 4.4rem);
+            font-size: clamp(2.4rem, 6vw, 4.4rem);
             line-height: 1.05;
-            margin-bottom: 0.7rem;
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .section-title .subtitle {
+        .subtitle {
+            margin-top: 0.65rem;
             font-family: 'Pacifico', cursive;
             color: var(--purple-400);
             font-size: 1.25rem;
         }
 
-        .admin-panel {
+        .layout {
             display: grid;
-            grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
             gap: 1.5rem;
             align-items: start;
         }
 
         .panel {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(192, 132, 252, 0.22);
-            border-radius: 24px;
-            box-shadow: 0 18px 50px rgba(147, 51, 234, 0.13);
             padding: 2rem;
+            border: 1px solid rgba(192, 132, 252, 0.24);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.68);
+            box-shadow: 0 18px 50px rgba(147, 51, 234, 0.13);
+            backdrop-filter: blur(20px);
         }
 
         .panel h2 {
+            margin-bottom: 0.45rem;
             font-family: 'Fredoka One', cursive;
             color: var(--purple-dark);
-            font-size: 1.55rem;
-            margin-bottom: 0.35rem;
+            font-size: 1.6rem;
         }
 
         .panel p {
+            margin-bottom: 1.2rem;
             color: var(--text-muted);
             line-height: 1.7;
-            margin-bottom: 1.3rem;
         }
 
         label {
             display: block;
-            font-weight: 600;
-            color: var(--purple-dark);
             margin: 1rem 0 0.45rem;
+            color: var(--purple-dark);
+            font-weight: 700;
         }
 
-        input,
-        select,
-        button {
+        input, select, button {
             width: 100%;
-            font: inherit;
             border-radius: 16px;
+            font: inherit;
         }
 
-        input,
-        select {
-            border: 1px solid rgba(192, 132, 252, 0.34);
-            background: rgba(255, 255, 255, 0.82);
-            color: var(--text-dark);
+        input, select {
             padding: 0.95rem 1rem;
+            border: 1px solid rgba(192, 132, 252, 0.34);
+            background: rgba(255, 255, 255, 0.86);
+            color: var(--text-dark);
             outline: none;
         }
 
-        input:focus,
-        select:focus {
+        input:focus, select:focus {
             border-color: var(--purple-500);
             box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12);
         }
 
-        input[type="file"] {
+        button {
+            margin-top: 1.2rem;
+            padding: 0.95rem 1rem;
+            border: 0;
+            background: var(--gradient-1);
+            color: var(--white);
+            box-shadow: 0 10px 28px rgba(147, 51, 234, 0.22);
             cursor: pointer;
+            font-weight: 800;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(147, 51, 234, 0.27);
+        }
+
+        .secondary {
+            border: 1px solid rgba(192, 132, 252, 0.42);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--purple-500);
+            box-shadow: none;
         }
 
         .button-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.8rem;
-            margin-top: 1.2rem;
-        }
-
-        button {
-            border: 0;
-            padding: 0.95rem 1rem;
-            cursor: pointer;
-            font-weight: 700;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-        }
-
-        .primary {
-            background: var(--gradient-1);
-            color: var(--white);
-            box-shadow: 0 10px 28px rgba(147, 51, 234, 0.22);
-        }
-
-        .secondary {
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--purple-500);
-            border: 1px solid rgba(192, 132, 252, 0.42);
         }
 
         .status {
             min-height: 1.6rem;
             margin-top: 1rem;
             color: var(--purple-600);
-            font-weight: 600;
-        }
-
-        .preview {
-            display: grid;
-            gap: 1rem;
+            font-weight: 700;
         }
 
         .preview-frame {
-            min-height: 360px;
-            border-radius: 22px;
-            overflow: hidden;
-            background: linear-gradient(145deg, rgba(255,255,255,0.8), rgba(216,180,254,0.26));
-            border: 1px solid rgba(192, 132, 252, 0.24);
+            min-height: 380px;
+            padding: 1rem;
             display: grid;
             place-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(192, 132, 252, 0.24);
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.82), rgba(216,180,254,0.28));
             color: var(--text-muted);
             text-align: center;
-            padding: 1rem;
         }
 
         .preview-frame img,
@@ -299,37 +256,11 @@
             border-radius: 18px;
         }
 
-        .mini-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.8rem;
-        }
-
-        .mini-card {
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(192, 132, 252, 0.2);
-            padding: 1rem;
-        }
-
-        .mini-card strong {
-            display: block;
-            color: var(--purple-dark);
-            margin-bottom: 0.25rem;
-        }
-
-        .mini-card span {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-        }
-
-        #dashboard { display: none; }
+        #uploadPage { display: none; }
 
         @media (max-width: 820px) {
-            .nav-links { gap: 1rem; }
-            .admin-panel { grid-template-columns: 1fr; }
+            .layout { grid-template-columns: 1fr; }
             .button-row { grid-template-columns: 1fr; }
-            main { padding-top: 6.2rem; }
         }
 
         @media (max-width: 540px) {
@@ -346,7 +277,7 @@
     <div class="glow-orb glow-orb-2"></div>
     <div class="glow-orb glow-orb-3"></div>
 
-    <nav id="navbar">
+    <nav>
         <a class="nav-logo" href="index.html">Maysoon</a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
@@ -357,48 +288,54 @@
     </nav>
 
     <main>
-        <div class="section-title">
-            <h1>Admin Studio</h1>
-            <div class="subtitle">Upload new portfolio media</div>
-        </div>
+        <section id="loginPage">
+            <div class="section-title">
+                <h1>Admin Login</h1>
+                <div class="subtitle">Maysoon portfolio control</div>
+            </div>
 
-        <section class="admin-panel">
-            <div class="panel" id="loginBox">
-                <h2>Admin Login</h2>
-                <p>Sign in to add new pictures and reels to the live portfolio sections.</p>
+            <div class="panel" style="max-width: 460px; margin: 0 auto;">
+                <h2>Sign In</h2>
+                <p>Use the admin username and password to open the upload page.</p>
                 <label for="username">Username</label>
                 <input id="username" type="text" autocomplete="username" placeholder="maysoon">
                 <label for="password">Password</label>
-                <input id="password" type="password" autocomplete="current-password" placeholder="Password">
-                <button class="primary" id="loginBtn">Login</button>
+                <input id="password" type="password" autocomplete="current-password" placeholder="123">
+                <button id="loginBtn">Login</button>
                 <div class="status" id="loginStatus"></div>
             </div>
+        </section>
 
-            <div class="panel" id="dashboard">
-                <h2>Upload Media</h2>
-                <p>Select Pictures for images or Reels for videos. The public pages will load the new uploads automatically.</p>
-                <label for="title">Title</label>
-                <input id="title" type="text" placeholder="Portfolio title">
-                <label for="category">Section</label>
-                <select id="category">
-                    <option value="pictures">Pictures</option>
-                    <option value="reels">Reels</option>
-                </select>
-                <label for="fileInput">File</label>
-                <input id="fileInput" type="file" accept="image/*,video/*">
-                <div class="button-row">
-                    <button class="primary" id="uploadBtn">Upload</button>
-                    <button class="secondary" id="logoutBtn">Logout</button>
-                </div>
-                <div class="status" id="status"></div>
+        <section id="uploadPage">
+            <div class="section-title">
+                <h1>Upload Media</h1>
+                <div class="subtitle">Pictures and reels</div>
             </div>
 
-            <div class="panel preview">
-                <h2>Preview</h2>
-                <div class="preview-frame" id="previewFrame">Choose a picture or video to preview it here.</div>
-                <div class="mini-grid">
-                    <div class="mini-card"><strong>Pictures</strong><span>Images appear on the Visual Work page.</span></div>
-                    <div class="mini-card"><strong>Reels</strong><span>Videos appear on the Selected Reels page.</span></div>
+            <div class="layout">
+                <div class="panel">
+                    <h2>New Upload</h2>
+                    <p>Choose Pictures for an image or Reels for a video. Firebase creates the media collection automatically on the first upload.</p>
+                    <label for="title">Title</label>
+                    <input id="title" type="text" placeholder="Portfolio title">
+                    <label for="category">Section</label>
+                    <select id="category">
+                        <option value="pictures">Pictures</option>
+                        <option value="reels">Reels</option>
+                    </select>
+                    <label for="fileInput">File</label>
+                    <input id="fileInput" type="file" accept="image/*">
+                    <div class="button-row">
+                        <button id="uploadBtn">Upload</button>
+                        <button class="secondary" id="logoutBtn">Logout</button>
+                    </div>
+                    <div class="status" id="status"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Preview</h2>
+                    <p>Check the selected picture or video before uploading.</p>
+                    <div class="preview-frame" id="previewFrame">Choose a file to preview it here.</div>
                 </div>
             </div>
         </section>
@@ -406,24 +343,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-        import {
-            getAuth,
-            signInWithEmailAndPassword,
-            signOut,
-            onAuthStateChanged
-        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-        import {
-            getFirestore,
-            collection,
-            addDoc,
-            serverTimestamp
-        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
-        import {
-            getStorage,
-            ref,
-            uploadBytes,
-            getDownloadURL
-        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCHTxAjLo6A9ZCdxoOK8gfiP1TiEMQS7Cs",
@@ -435,65 +356,66 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getFirestore(app);
         const storage = getStorage(app);
 
         const ADMIN_USERNAME = "maysoon";
-        const ADMIN_EMAIL = "desertpixelmedia1@gmail.com";
         const ADMIN_PASSWORD = "123";
 
-        const loginBox = document.getElementById("loginBox");
-        const dashboard = document.getElementById("dashboard");
+        const loginPage = document.getElementById("loginPage");
+        const uploadPage = document.getElementById("uploadPage");
         const loginStatus = document.getElementById("loginStatus");
         const statusText = document.getElementById("status");
         const fileInput = document.getElementById("fileInput");
         const categoryInput = document.getElementById("category");
         const previewFrame = document.getElementById("previewFrame");
 
-        document.getElementById("loginBtn").addEventListener("click", async () => {
+        function showUploadPage() {
+            loginPage.style.display = "none";
+            uploadPage.style.display = "block";
+        }
+
+        function showLoginPage() {
+            uploadPage.style.display = "none";
+            loginPage.style.display = "block";
+        }
+
+        document.getElementById("loginBtn").addEventListener("click", () => {
             const username = document.getElementById("username").value.trim().toLowerCase();
             const password = document.getElementById("password").value;
 
-            if (username !== ADMIN_USERNAME) {
-                loginStatus.textContent = "Wrong username";
-                return;
-            }
-
-            if (password !== ADMIN_PASSWORD) {
-                loginStatus.textContent = "Wrong password.";
-                return;
-            }
-
-            try {
-                loginStatus.textContent = "Logging in...";
-                await signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD);
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
                 loginStatus.textContent = "";
-            } catch (error) {
-                const messages = {
-                    "auth/invalid-credential": "Wrong password, or the Firebase user is not created.",
-                    "auth/user-not-found": "Firebase user is not created for desertpixelmedia1@gmail.com.",
-                    "auth/wrong-password": "Wrong password.",
-                    "auth/too-many-requests": "Too many login tries. Wait a bit, then try again.",
-                    "auth/network-request-failed": "Network error. Check your internet connection."
-                };
-                loginStatus.textContent = messages[error.code] || error.message;
+                showUploadPage();
+                return;
             }
+
+            loginStatus.textContent = "Wrong username or password.";
         });
 
-        document.getElementById("logoutBtn").addEventListener("click", async () => {
-            await signOut(auth);
+        document.getElementById("password").addEventListener("keydown", (event) => {
+            if (event.key === "Enter") document.getElementById("loginBtn").click();
         });
 
-        onAuthStateChanged(auth, (user) => {
-            loginBox.style.display = user ? "none" : "block";
-            dashboard.style.display = user ? "block" : "none";
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            document.getElementById("password").value = "";
+            statusText.textContent = "";
+            fileInput.value = "";
+            previewFrame.textContent = "Choose a file to preview it here.";
+            showLoginPage();
+        });
+
+        categoryInput.addEventListener("change", () => {
+            fileInput.accept = categoryInput.value === "reels" ? "video/*" : "image/*";
+            fileInput.value = "";
+            statusText.textContent = "";
+            previewFrame.textContent = "Choose a file to preview it here.";
         });
 
         fileInput.addEventListener("change", () => {
             const file = fileInput.files[0];
             if (!file) {
-                previewFrame.textContent = "Choose a picture or video to preview it here.";
+                previewFrame.textContent = "Choose a file to preview it here.";
                 return;
             }
 
@@ -501,14 +423,8 @@
             if (file.type.startsWith("video/")) {
                 previewFrame.innerHTML = '<video controls playsinline src="' + url + '"></video>';
             } else {
-                previewFrame.innerHTML = '<img src="' + url + '" alt="Selected media preview">';
+                previewFrame.innerHTML = '<img src="' + url + '" alt="Selected upload preview">';
             }
-        });
-
-        categoryInput.addEventListener("change", () => {
-            fileInput.accept = categoryInput.value === "reels" ? "video/*" : "image/*";
-            fileInput.value = "";
-            previewFrame.textContent = "Choose a picture or video to preview it here.";
         });
 
         document.getElementById("uploadBtn").addEventListener("click", async () => {
@@ -522,19 +438,19 @@
             }
 
             if (category === "pictures" && !file.type.startsWith("image/")) {
-                statusText.textContent = "Choose an image for the Pictures section.";
+                statusText.textContent = "Choose an image for Pictures.";
                 return;
             }
 
             if (category === "reels" && !file.type.startsWith("video/")) {
-                statusText.textContent = "Choose a video for the Reels section.";
+                statusText.textContent = "Choose a video for Reels.";
                 return;
             }
 
             statusText.textContent = "Uploading...";
 
             try {
-                const fileType = file.type.startsWith("video/") ? "video" : "image";
+                const type = file.type.startsWith("video/") ? "video" : "image";
                 const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "-");
                 const filePath = `media/${category}/${Date.now()}-${safeName}`;
                 const fileRef = ref(storage, filePath);
@@ -545,23 +461,20 @@
                 await addDoc(collection(db, "media"), {
                     title: title || (category === "reels" ? "New Reel" : "New Visual Work"),
                     category,
-                    type: fileType,
+                    type,
                     url,
                     path: filePath,
                     createdAt: serverTimestamp()
                 });
 
-                statusText.textContent = "Upload complete. It is ready on the public page.";
+                statusText.textContent = "Upload complete. Firebase created/updated the media collection.";
                 document.getElementById("title").value = "";
                 fileInput.value = "";
-                previewFrame.textContent = "Choose a picture or video to preview it here.";
+                previewFrame.textContent = "Choose a file to preview it here.";
             } catch (error) {
                 statusText.textContent = error.message;
             }
         });
-
-        const navbar = document.getElementById("navbar");
-        window.addEventListener("scroll", () => navbar.classList.toggle("scrolled", window.scrollY > 50));
 
         const particlesContainer = document.getElementById("particles");
         const colors = ["#c084fc", "#a855f7", "#d8b4fe", "#e9d5ff", "#7e22ce"];
