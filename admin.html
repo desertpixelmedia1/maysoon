@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Maysoon El-Masry</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple-light: #f3e8ff;
+            --purple-100: #e9d5ff;
+            --purple-200: #d8b4fe;
+            --purple-300: #c084fc;
+            --purple-400: #a855f7;
+            --purple-500: #9333ea;
+            --purple-600: #7e22ce;
+            --purple-dark: #581c87;
+            --white: #ffffff;
+            --text-dark: #1e1b2e;
+            --text-muted: #6b7280;
+            --gradient-1: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #7e22ce 100%);
+            --gradient-bg: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 30%, #e9d5ff 60%, #faf5ff 100%);
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background: var(--gradient-bg);
+            color: var(--text-dark);
+        }
+
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatParticle linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 0.3; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+
+        .glow-orb {
+            position: fixed;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .glow-orb-1 { width: 400px; height: 400px; background: var(--purple-300); top: -100px; right: -100px; animation: orbFloat1 8s ease-in-out infinite; }
+        .glow-orb-2 { width: 300px; height: 300px; background: var(--purple-400); bottom: -50px; left: -50px; animation: orbFloat2 10s ease-in-out infinite; }
+        .glow-orb-3 { width: 250px; height: 250px; background: var(--purple-200); top: 50%; left: 50%; animation: orbFloat3 12s ease-in-out infinite; }
+
+        @keyframes orbFloat1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-50px, 50px); } }
+        @keyframes orbFloat2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(50px, -50px); } }
+        @keyframes orbFloat3 { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-30%, -30%); } }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(250, 245, 255, 0.72);
+            border-bottom: 1px solid rgba(192, 132, 252, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .nav-logo {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5rem;
+            text-decoration: none;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover { color: var(--purple-500); }
+
+        main {
+            position: relative;
+            z-index: 1;
+            width: min(1040px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 7rem 0 4rem;
+        }
+
+        .section-title {
+            margin-bottom: 2.4rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(2.4rem, 6vw, 4.4rem);
+            line-height: 1.05;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            margin-top: 0.65rem;
+            font-family: 'Pacifico', cursive;
+            color: var(--purple-400);
+            font-size: 1.25rem;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .panel {
+            padding: 2rem;
+            border: 1px solid rgba(192, 132, 252, 0.24);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.68);
+            box-shadow: 0 18px 50px rgba(147, 51, 234, 0.13);
+            backdrop-filter: blur(20px);
+        }
+
+        .panel h2 {
+            margin-bottom: 0.45rem;
+            font-family: 'Fredoka One', cursive;
+            color: var(--purple-dark);
+            font-size: 1.6rem;
+        }
+
+        .panel p {
+            margin-bottom: 1.2rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        label {
+            display: block;
+            margin: 1rem 0 0.45rem;
+            color: var(--purple-dark);
+            font-weight: 700;
+        }
+
+        input, select, button {
+            width: 100%;
+            border-radius: 16px;
+            font: inherit;
+        }
+
+        input, select {
+            padding: 0.95rem 1rem;
+            border: 1px solid rgba(192, 132, 252, 0.34);
+            background: rgba(255, 255, 255, 0.86);
+            color: var(--text-dark);
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--purple-500);
+            box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.12);
+        }
+
+        button {
+            margin-top: 1.2rem;
+            padding: 0.95rem 1rem;
+            border: 0;
+            background: var(--gradient-1);
+            color: var(--white);
+            box-shadow: 0 10px 28px rgba(147, 51, 234, 0.22);
+            cursor: pointer;
+            font-weight: 800;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(147, 51, 234, 0.27);
+        }
+
+        .secondary {
+            border: 1px solid rgba(192, 132, 252, 0.42);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--purple-500);
+            box-shadow: none;
+        }
+
+        .button-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .status {
+            min-height: 1.6rem;
+            margin-top: 1rem;
+            color: var(--purple-600);
+            font-weight: 700;
+        }
+
+        .preview-frame {
+            min-height: 380px;
+            padding: 1rem;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(192, 132, 252, 0.24);
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.82), rgba(216,180,254,0.28));
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        .preview-frame img,
+        .preview-frame video {
+            width: 100%;
+            max-height: 540px;
+            object-fit: contain;
+            border-radius: 18px;
+        }
+
+        #uploadPage { display: none; }
+
+        @media (max-width: 820px) {
+            .layout { grid-template-columns: 1fr; }
+            .button-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 540px) {
+            nav { padding: 0.85rem 1rem; }
+            .nav-links { display: none; }
+            .panel { padding: 1.35rem; border-radius: 20px; }
+            .preview-frame { min-height: 260px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <nav>
+        <a class="nav-logo" href="index.html">Maysoon</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="reels.html">Reels</a></li>
+            <li><a href="pictures.html">Pictures</a></li>
+            <li><a href="admin.html" class="active">Admin</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="loginPage">
+            <div class="section-title">
+                <h1>Admin Login</h1>
+                <div class="subtitle">Maysoon portfolio control</div>
+            </div>
+
+            <div class="panel" style="max-width: 460px; margin: 0 auto;">
+                <h2>Sign In</h2>
+                <p>Use the admin username and password to open the upload page.</p>
+                <label for="username">Username</label>
+                <input id="username" type="text" autocomplete="username" placeholder="maysoon">
+                <label for="password">Password</label>
+                <input id="password" type="password" autocomplete="current-password" placeholder="123">
+                <button id="loginBtn">Login</button>
+                <div class="status" id="loginStatus"></div>
+            </div>
+        </section>
+
+        <section id="uploadPage">
+            <div class="section-title">
+                <h1>Upload Media</h1>
+                <div class="subtitle">Pictures and reels</div>
+            </div>
+
+            <div class="layout">
+                <div class="panel">
+                    <h2>New Upload</h2>
+                    <p>Choose Pictures for an image or Reels for a video. Firebase creates the media collection automatically on the first upload.</p>
+                    <label for="title">Title</label>
+                    <input id="title" type="text" placeholder="Portfolio title">
+                    <label for="category">Section</label>
+                    <select id="category">
+                        <option value="pictures">Pictures</option>
+                        <option value="reels">Reels</option>
+                    </select>
+                    <label for="fileInput">File</label>
+                    <input id="fileInput" type="file" accept="image/*">
+                    <div class="button-row">
+                        <button id="uploadBtn">Upload</button>
+                        <button class="secondary" id="logoutBtn">Logout</button>
+                    </div>
+                    <div class="status" id="status"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Preview</h2>
+                    <p>Check the selected picture or video before uploading.</p>
+                    <div class="preview-frame" id="previewFrame">Choose a file to preview it here.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHTxAjLo6A9ZCdxoOK8gfiP1TiEMQS7Cs",
+            authDomain: "maysoon-reel.firebaseapp.com",
+            projectId: "maysoon-reel",
+            storageBucket: "maysoon-reel.firebasestorage.app",
+            messagingSenderId: "205008628100",
+            appId: "1:205008628100:web:da6158cc9eae10708095d1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        const ADMIN_USERNAME = "maysoon";
+        const ADMIN_PASSWORD = "123";
+
+        const loginPage = document.getElementById("loginPage");
+        const uploadPage = document.getElementById("uploadPage");
+        const loginStatus = document.getElementById("loginStatus");
+        const statusText = document.getElementById("status");
+        const fileInput = document.getElementById("fileInput");
+        const categoryInput = document.getElementById("category");
+        const previewFrame = document.getElementById("previewFrame");
+
+        function showUploadPage() {
+            loginPage.style.display = "none";
+            uploadPage.style.display = "block";
+        }
+
+        function showLoginPage() {
+            uploadPage.style.display = "none";
+            loginPage.style.display = "block";
+        }
+
+        document.getElementById("loginBtn").addEventListener("click", () => {
+            const username = document.getElementById("username").value.trim().toLowerCase();
+            const password = document.getElementById("password").value;
+
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                loginStatus.textContent = "";
+                showUploadPage();
+                return;
+            }
+
+            loginStatus.textContent = "Wrong username or password.";
+        });
+
+        document.getElementById("password").addEventListener("keydown", (event) => {
+            if (event.key === "Enter") document.getElementById("loginBtn").click();
+        });
+
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            document.getElementById("password").value = "";
+            statusText.textContent = "";
+            fileInput.value = "";
+            previewFrame.textContent = "Choose a file to preview it here.";
+            showLoginPage();
+        });
+
+        categoryInput.addEventListener("change", () => {
+            fileInput.accept = categoryInput.value === "reels" ? "video/*" : "image/*";
+            fileInput.value = "";
+            statusText.textContent = "";
+            previewFrame.textContent = "Choose a file to preview it here.";
+        });
+
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                previewFrame.textContent = "Choose a file to preview it here.";
+                return;
+            }
+
+            const url = URL.createObjectURL(file);
+            if (file.type.startsWith("video/")) {
+                previewFrame.innerHTML = '<video controls playsinline src="' + url + '"></video>';
+            } else {
+                previewFrame.innerHTML = '<img src="' + url + '" alt="Selected upload preview">';
+            }
+        });
+
+        document.getElementById("uploadBtn").addEventListener("click", async () => {
+            const title = document.getElementById("title").value.trim();
+            const category = categoryInput.value;
+            const file = fileInput.files[0];
+
+            if (!file) {
+                statusText.textContent = "Choose a file first.";
+                return;
+            }
+
+            if (category === "pictures" && !file.type.startsWith("image/")) {
+                statusText.textContent = "Choose an image for Pictures.";
+                return;
+            }
+
+            if (category === "reels" && !file.type.startsWith("video/")) {
+                statusText.textContent = "Choose a video for Reels.";
+                return;
+            }
+
+            statusText.textContent = "Uploading...";
+
+            try {
+                const type = file.type.startsWith("video/") ? "video" : "image";
+                const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "-");
+                const filePath = `media/${category}/${Date.now()}-${safeName}`;
+                const fileRef = ref(storage, filePath);
+
+                await uploadBytes(fileRef, file);
+                const url = await getDownloadURL(fileRef);
+
+                await addDoc(collection(db, "media"), {
+                    title: title || (category === "reels" ? "New Reel" : "New Visual Work"),
+                    category,
+                    type,
+                    url,
+                    path: filePath,
+                    createdAt: serverTimestamp()
+                });
+
+                statusText.textContent = "Upload complete. Firebase created/updated the media collection.";
+                document.getElementById("title").value = "";
+                fileInput.value = "";
+                previewFrame.textContent = "Choose a file to preview it here.";
+            } catch (error) {
+                statusText.textContent = error.message;
+            }
+        });
+
+        const particlesContainer = document.getElementById("particles");
+        const colors = ["#c084fc", "#a855f7", "#d8b4fe", "#e9d5ff", "#7e22ce"];
+        function createParticle() {
+            const particle = document.createElement("div");
+            particle.classList.add("particle");
+            const size = Math.random() * 8 + 3;
+            particle.style.width = size + "px";
+            particle.style.height = size + "px";
+            particle.style.left = Math.random() * 100 + "%";
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.animationDuration = Math.random() * 10 + 10 + "s";
+            particle.style.animationDelay = Math.random() * 5 + "s";
+            particlesContainer.appendChild(particle);
+            setTimeout(() => particle.remove(), 20000);
+        }
+        setInterval(createParticle, 800);
+        for (let i = 0; i < 15; i++) createParticle();
+    </script>
+</body>
+</html>
