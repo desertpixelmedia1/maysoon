@@ -436,6 +436,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="reels.html">Reels</a></li>
             <li><a href="pictures.html" class="active">Pictures</a></li>
+            <li><a href="admin.html">Admin</a></li>
         </ul>
         <div class="hamburger" id="hamburger">
             <span></span><span></span><span></span>
@@ -446,6 +447,7 @@
         <a href="index.html" onclick="closeMenu()">Home</a>
         <a href="reels.html" onclick="closeMenu()">Reels</a>
         <a href="pictures.html" onclick="closeMenu()">Pictures</a>
+        <a href="admin.html" onclick="closeMenu()">Admin</a>
     </div>
 
     <section class="gallery-page" id="pictures">
@@ -475,7 +477,28 @@
         <p>&copy; 2026 Maysoon El-Masry. All rights reserved.</p>
     </footer>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            getDocs,
+            query,
+            where
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHTxAjLo6A9ZCdxoOK8gfiP1TiEMQS7Cs",
+            authDomain: "maysoon-reel.firebaseapp.com",
+            projectId: "maysoon-reel",
+            storageBucket: "maysoon-reel.firebasestorage.app",
+            messagingSenderId: "205008628100",
+            appId: "1:205008628100:web:da6158cc9eae10708095d1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         hamburger.addEventListener('click', () => {
@@ -568,24 +591,57 @@
             'https://i.ibb.co/8LfkHqnD/Image-34.webp'
         ];
         let pics = [];
+        const current = { index: 0 };
 
-        picFiles.forEach((src, i) => {
+        function escapeHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = value;
+            return div.innerHTML;
+        }
+
+        function addPictureCard(src, i, title) {
+            const safeTitle = escapeHtml(title || 'Visual Work ' + (i + 1));
             const card = document.createElement('div');
             card.className = 'pic-card';
             card.dataset.index = i;
-            card.dataset.caption = 'Visual Work ' + (i + 1);
+            card.dataset.caption = title || 'Visual Work ' + (i + 1);
             card.innerHTML =
-                '<div class="pic-wrapper"><img src="' + src + '" alt="Visual Work ' + (i + 1) + '"></div>' +
-                '<div class="pic-label">Work ' + (i + 1) + '</div>' +
+                '<div class="pic-wrapper"><img src="' + src + '" alt="' + safeTitle + '"></div>' +
+                '<div class="pic-label">' + safeTitle + '</div>' +
                 '<div class="pic-caption">Maysoon El-Masry</div>';
             card.addEventListener('click', () => openLightbox(i));
             card.addEventListener('touchstart', function () { this.style.transform = 'scale(0.96)'; });
             card.addEventListener('touchend', function () { this.style.transform = ''; });
             picsGrid.appendChild(card);
+        }
+
+        picFiles.forEach((src, i) => {
+            addPictureCard(src, i, 'Work ' + (i + 1));
         });
 
+        async function loadUploadedPictures() {
+            try {
+                const uploadedQuery = query(
+                    collection(db, 'media'),
+                    where('category', '==', 'pictures'),
+                    where('type', '==', 'image')
+                );
+                const snapshot = await getDocs(uploadedQuery);
+                const uploads = snapshot.docs
+                    .map(doc => doc.data())
+                    .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                uploads.forEach((item) => {
+                    if (!item.url) return;
+                    addPictureCard(item.url, picsGrid.children.length, item.title || 'Visual Work');
+                });
+            } catch (error) {
+                console.warn('Could not load uploaded pictures:', error);
+            }
+        }
+
+        await loadUploadedPictures();
+
         pics = Array.from(document.querySelectorAll('.pic-card'));
-        const current = { index: 0 };
 
         function openLightbox(index) {
             current.index = index;

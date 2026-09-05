@@ -468,6 +468,7 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="reels.html" class="active">Reels</a></li>
             <li><a href="pictures.html">Pictures</a></li>
+            <li><a href="admin.html">Admin</a></li>
         </ul>
         <div class="hamburger" id="hamburger">
             <span></span><span></span><span></span>
@@ -478,6 +479,7 @@
         <a href="index.html" onclick="closeMenu()">Home</a>
         <a href="reels.html" onclick="closeMenu()">Reels</a>
         <a href="pictures.html" onclick="closeMenu()">Pictures</a>
+        <a href="admin.html" onclick="closeMenu()">Admin</a>
     </div>
 
     <section class="gallery-page" id="reels">
@@ -626,7 +628,28 @@
         <p>&copy; 2026 Maysoon El-Masry. All rights reserved.</p>
     </footer>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            getDocs,
+            query,
+            where
+        } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHTxAjLo6A9ZCdxoOK8gfiP1TiEMQS7Cs",
+            authDomain: "maysoon-reel.firebaseapp.com",
+            projectId: "maysoon-reel",
+            storageBucket: "maysoon-reel.firebasestorage.app",
+            messagingSenderId: "205008628100",
+            appId: "1:205008628100:web:da6158cc9eae10708095d1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
         hamburger.addEventListener('click', () => {
@@ -677,6 +700,58 @@
         const modalVideo = document.getElementById('modalVideo');
         const modalTitle = document.getElementById('modalTitle');
         const modalClose = document.getElementById('modalClose');
+
+        const reelsGrid = document.getElementById('reelsGrid');
+
+        function escapeHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = value;
+            return div.innerHTML;
+        }
+
+        function addReelCard(src, title) {
+            const index = reelsGrid.children.length;
+            const safeTitle = escapeHtml(title || 'Reel ' + (index + 1));
+            const card = document.createElement('div');
+            card.className = 'reel-card visible';
+            card.dataset.index = index;
+            card.dataset.video = src;
+            card.dataset.title = title || 'Reel ' + (index + 1);
+            card.innerHTML =
+                '<div class="reel-wrapper">' +
+                    '<span class="reel-number">' + String(index + 1).padStart(2, '0') + '</span>' +
+                    '<video muted playsinline preload="metadata" src="' + src + '"></video>' +
+                    '<div class="reel-overlay">' +
+                        '<div class="play-indicator">' +
+                            '<svg viewBox="0 0 24 24" fill="#9333ea"><path d="M8 5v14l11-7z"/></svg>' +
+                        '</div>' +
+                        '<span class="reel-label">' + safeTitle + '</span>' +
+                    '</div>' +
+                '</div>';
+            reelsGrid.appendChild(card);
+        }
+
+        async function loadUploadedReels() {
+            try {
+                const uploadedQuery = query(
+                    collection(db, 'media'),
+                    where('category', '==', 'reels'),
+                    where('type', '==', 'video')
+                );
+                const snapshot = await getDocs(uploadedQuery);
+                const uploads = snapshot.docs
+                    .map(doc => doc.data())
+                    .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+                uploads.forEach((item) => {
+                    if (!item.url) return;
+                    addReelCard(item.url, item.title || 'Reel ' + (reelsGrid.children.length + 1));
+                });
+            } catch (error) {
+                console.warn('Could not load uploaded reels:', error);
+            }
+        }
+
+        await loadUploadedReels();
 
         const reels = Array.from(document.querySelectorAll('.reel-card'));
         let currentIndex = 0;
