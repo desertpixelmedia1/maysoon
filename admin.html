@@ -439,8 +439,9 @@
         const db = getFirestore(app);
         const storage = getStorage(app);
 
-        const ADMIN_USERNAME = "masyoon";
+        const ADMIN_USERNAME = "maysoon";
         const ADMIN_EMAIL = "desertpixelmedia1@gmail.com";
+        const ADMIN_PASSWORD = "123";
 
         const loginBox = document.getElementById("loginBox");
         const dashboard = document.getElementById("dashboard");
@@ -459,9 +460,14 @@
                 return;
             }
 
+            if (password !== ADMIN_PASSWORD) {
+                loginStatus.textContent = "Wrong password.";
+                return;
+            }
+
             try {
                 loginStatus.textContent = "Logging in...";
-                await signInWithEmailAndPassword(auth, ADMIN_EMAIL, password);
+                await signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_PASSWORD);
                 loginStatus.textContent = "";
             } catch (error) {
                 const messages = {
